@@ -14,8 +14,11 @@
 - `plans/` — generated plans. Named `<feature>-plan.md`.
 - `tasks/tasks.json` — single task queue for all active work.
 - `docs/post-mortems/` — post-mortem files named `<date>-<slug>.md`.
+- `docs/specs/` — design specs named `<YYYY-MM-DD>-<feature>-design.md`.
+- `ba-tasks/` — BA-authored markdown files consumed by `/task-agent`.
 - `.rin-context.md` — ephemeral context pack for sub-agents (gitignored).
 - `.rin-checkpoint.md` — session checkpoint (gitignored).
+- `.rin-agent-state.json` — task-agent pipeline state (gitignored).
 - `handoff.md` — handoff document (gitignored).
 
 ## Agent Roles
@@ -30,6 +33,7 @@
 | **Ops Agent** | `/progress-report`, `/changelog`, `/dead-code`, `/post-mortem`, `/pre-commit`, `/generate-pr` |
 | **Coordination** | `/context-pack`, `/parallel-tasks`, `/checkpoint`, `/handoff`, `/agent-spawn` |
 | **Issue Pipeline** | `/fix-issue` (orchestrates: triage → brief → fix → verify) |
+| **Task Agent** | `/task-agent` (orchestrates: BA parse → spec → plan → implement) |
 | **Kit Management** | `/rin-init`, `/rin-upgrade` |
 
 ## Sub-Agent Pipeline (token-efficient issue fixing)

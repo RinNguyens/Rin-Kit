@@ -5,6 +5,10 @@
 ## Workflow
 
 ```
+BA Task (.md)
+    ↓
+/task-agent          ← full pipeline, human gates at each stage
+    ↓
 Specify → Plan → Tasks → Implement
     ↑                         |
     └─────── Spec Guardian ───┘
@@ -12,6 +16,7 @@ Specify → Plan → Tasks → Implement
 
 | Stage | Agent | Commands |
 |-------|-------|----------|
+| **BA → Implement** | Task Agent | `/task-agent` |
 | **Specify** | Architect Agent | `/write-spec`, `/spec-lint`, `/import-spec`, `/retrofit-spec` |
 | **Plan** | Planner Agent | `/spec-to-plan`, `/plan-fix`, `/explain-task` |
 | **Tasks** | — | `/task-next`, `/task-done`, `/rollback-task` |
@@ -94,6 +99,12 @@ Or copy `.claude/` into your project root and run `/rin-init`.
 | `/pre-commit` | Spec validation gate before git commit |
 | `/generate-pr` | Draft PR title and body from completed tasks |
 
+### Task Agent (BA → Implement)
+| Command | Description |
+|---------|-------------|
+| `/task-agent <path>` | Drive a BA markdown file through the full Specify → Plan → Implement pipeline |
+| `/task-agent --resume` | Resume an interrupted pipeline from last saved stage |
+
 ### Kit Management
 | Command | Description |
 |---------|-------------|
@@ -105,7 +116,8 @@ Or copy `.claude/` into your project root and run `/rin-init`.
 ```
 .claude/
   CLAUDE.md            # Workflow rules and agent roles
-  commands/            # 34 slash command definitions
+  skills/              # Slash command skill definitions
+ba-tasks/              # BA-authored markdown files for /task-agent
 specs/                 # Formal specifications
   archive/             # Retired specs
 plans/                 # Generated plans
@@ -113,6 +125,7 @@ tasks/
   tasks.json           # Atomic task queue
 docs/
   post-mortems/        # Post-mortem documents
+  specs/               # Design specs
 ```
 
 ## License
