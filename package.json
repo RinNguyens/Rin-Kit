@@ -1,5 +1,5 @@
 {
-  "name": "rin-kit",
+  "name": "@rin98s/rin-kit",
   "version": "0.1.0",
   "description": "Rin AI Agent Kit — Specify-to-Implement workflow for Claude Code",
   "keywords": [
