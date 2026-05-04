@@ -20,8 +20,8 @@
 
 ## Agent Roles
 
-| Role | Commands |
-|------|----------|
+| Role | Skills |
+|------|--------|
 | **Architect Agent** | `/write-spec`, `/spec-lint`, `/spec-split`, `/spec-merge`, `/import-spec`, `/retrofit-spec`, `/spec-update` |
 | **Planner Agent** | `/spec-to-plan`, `/plan-fix`, `/explain-task` |
 | **Coder Agent** | `/task-next`, `/task-done`, `/scaffold`, `/fix-bug`, `/fix-flow`, `/rollback-task` |
