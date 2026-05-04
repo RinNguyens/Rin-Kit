@@ -29,7 +29,36 @@
 | **Spec Guardian** | `/validate-output`, `/spec-diff`, `/review-patch`, `/impact-analysis` |
 | **Ops Agent** | `/progress-report`, `/changelog`, `/dead-code`, `/post-mortem`, `/pre-commit`, `/generate-pr` |
 | **Coordination** | `/context-pack`, `/parallel-tasks`, `/checkpoint`, `/handoff`, `/agent-spawn` |
+| **Issue Pipeline** | `/fix-issue` (orchestrates: triage → brief → fix → verify) |
 | **Kit Management** | `/rin-init`, `/rin-upgrade` |
+
+## Sub-Agent Pipeline (token-efficient issue fixing)
+
+```
+/fix-issue
+  ↓
+[Triage Agent]     skill:issue-triage      ~400 tokens   reads: 2 files max
+  ↓ scoped JSON
+[Brief Assembly]   skill:agent-brief       ~0 tokens     no LLM
+  ↓ minimal doc
+[Fix Agent]        skill:focused-fix       ~2,500 tokens reads: 3 files max
+  ↓ structured diff
+[Verify Agent]     skill:fix-verifier      ~400 tokens   reads: diff only
+  ↓ PASS/FAIL
+Total: ~3,500 tokens vs ~20,000+ for unscoped approach
+```
+
+## Skills Reference
+
+| Skill | Used by |
+|-------|---------|
+| `spec-parser` | All commands that read specs |
+| `issue-triage` | `/fix-issue` stage 1 |
+| `agent-brief` | `/fix-issue`, `/agent-spawn`, `/parallel-tasks` |
+| `focused-fix` | `/fix-issue` stage 3 |
+| `fix-verifier` | `/fix-issue` stage 4 |
+| `sub-agent-controller` | Any command spawning sub-agents |
+| `rin-doctor` | Kit health check |
 
 ## Tasks JSON Schema
 
