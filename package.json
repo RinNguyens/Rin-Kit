@@ -2,20 +2,28 @@
   "name": "rin-kit",
   "version": "0.1.0",
   "description": "Rin AI Agent Kit — Specify-to-Implement workflow for Claude Code",
-  "keywords": ["claude", "ai-agent", "claude-code", "specification", "workflow", "skills"],
+  "keywords": [
+    "claude",
+    "ai-agent",
+    "claude-code",
+    "specification",
+    "workflow",
+    "skills"
+  ],
   "author": "RinNguyens",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RinNguyens/Rin-Kit.git"
+    "url": "git+https://github.com/RinNguyens/Rin-Kit.git"
   },
   "homepage": "https://github.com/RinNguyens/Rin-Kit#readme",
   "bin": {
-    "rin-kit": "./bin/rin-kit.js"
+    "rin-kit": "bin/rin-kit.js"
   },
   "files": [
     "bin/",
-    ".claude/",
+    ".claude/CLAUDE.md",
+    ".claude/skills/",
     "install.sh",
     "README.md"
   ],
