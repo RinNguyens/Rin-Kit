@@ -1,0 +1,19 @@
+{
+  "name": "rin-kit",
+  "version": "0.1.0",
+  "description": "Rin AI Agent Kit — Specify-to-Implement workflow for Claude Code",
+  "keywords": ["claude", "ai-agent", "claude-code", "specification", "workflow"],
+  "author": "RinNguyens",
+  "license": "MIT",
+  "bin": {
+    "rin-kit": "./bin/rin-kit.js"
+  },
+  "files": [
+    "bin/",
+    ".claude/",
+    "install.sh"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
