@@ -10,12 +10,13 @@ Specify → Plan → Tasks → Implement
     └─────── Spec Guardian ───┘
 ```
 
-| Stage | Agent | Input | Output |
-|-------|-------|-------|--------|
-| **Specify** | Architect Agent | Requirements | Formal Spec (OpenAPI / Markdown) |
-| **Plan** | Planner Agent | Spec | Ordered task list |
-| **Tasks** | — | Plan | `tasks.json` / GitHub Issues |
-| **Implement** | Coder Agent | Task + Spec | Validated code |
+| Stage | Agent | Commands |
+|-------|-------|----------|
+| **Specify** | Architect Agent | `/write-spec`, `/spec-lint`, `/import-spec`, `/retrofit-spec` |
+| **Plan** | Planner Agent | `/spec-to-plan`, `/plan-fix`, `/explain-task` |
+| **Tasks** | — | `/task-next`, `/task-done`, `/rollback-task` |
+| **Implement** | Coder Agent | `/scaffold`, `/fix-bug`, `/fix-flow` |
+| **Validate** | Spec Guardian | `/validate-output`, `/spec-diff`, `/review-patch` |
 
 ## Install
 
@@ -23,49 +24,95 @@ Specify → Plan → Tasks → Implement
 npx rin-kit init
 ```
 
-Or manually copy `.claude/` into your project root.
+Or copy `.claude/` into your project root and run `/rin-init`.
 
-## Slash Commands
+## All Slash Commands
 
+### Spec Lifecycle
 | Command | Description |
 |---------|-------------|
 | `/write-spec` | Scaffold a formal spec (OpenAPI / Markdown template) |
+| `/spec-lint` | Check spec quality — flag missing rules, ambiguous language |
 | `/spec-to-plan` | Parse spec → ordered task list |
-| `/plan-fix` | Identify gaps or conflicts in the plan |
-| `/review-patch` | Review a diff against the spec |
-| `/fix-bug` | Debug-first, spec-validated bug fix |
-| `/fix-flow` | Fix multi-step logic / orchestration issues |
 | `/spec-diff` | Compare current code against spec, surface drift |
-| `/task-next` | Pick the next unblocked task from the queue |
-| `/task-done` | Mark task complete and update tracking |
-| `/agent-spawn` | Spawn a scoped sub-agent with spec context injected |
-| `/validate-output` | Check agent output against spec constraints |
-| `/rollback-task` | Undo last task changes and requeue |
 | `/spec-update` | Amend spec and re-evaluate affected tasks |
-| `/scaffold` | Generate boilerplate from a spec section |
+| `/spec-split` | Break a large spec into focused sub-specs |
+| `/spec-merge` | Merge two overlapping specs and resolve conflicts |
+| `/import-spec` | Import OpenAPI / JSON Schema / Protobuf as a Rin spec |
+| `/retrofit-spec` | Reverse-engineer a spec from existing code |
+
+### Planning
+| Command | Description |
+|---------|-------------|
+| `/plan-fix` | Identify gaps or conflicts in the current plan |
 | `/explain-task` | Explain a task in plain English from the spec |
 
-## Skills
+### Implementation
+| Command | Description |
+|---------|-------------|
+| `/task-next` | Pick the next unblocked task and begin implementation |
+| `/task-done` | Mark task complete and show next steps |
+| `/rollback-task` | Undo last task changes and requeue |
+| `/scaffold` | Generate boilerplate from a spec section |
+| `/fix-bug` | Debug-first, spec-validated bug fix |
+| `/fix-flow` | Fix multi-step logic / orchestration issues |
 
-| Skill | Description |
-|-------|-------------|
-| `write-spec` | Interactive spec wizard |
-| `spec-to-plan` | Spec parsing + task generation |
-| `coder-agent` | Isolated implement loop (one task at a time) |
-| `spec-guardian` | Watches for spec drift during implementation |
-| `rin-init` | Bootstrap a new Rin Kit project structure |
+### Validation & Review
+| Command | Description |
+|---------|-------------|
+| `/validate-output` | Check implementation against spec constraints |
+| `/review-patch` | Review a diff against the spec before merging |
+| `/impact-analysis` | Show which specs and tasks depend on a file before editing |
+
+### Testing
+| Command | Description |
+|---------|-------------|
+| `/write-tests` | Generate tests from spec Behavior rules and Error Cases |
+| `/test-coverage-check` | Map existing tests to spec rules, find gaps |
+| `/edge-case-hunt` | Generate boundary inputs from spec constraints |
+
+### Agent Coordination
+| Command | Description |
+|---------|-------------|
+| `/agent-spawn` | Spawn a scoped sub-agent with spec context injected |
+| `/context-pack` | Bundle spec + plan + task into one file for sub-agents |
+| `/parallel-tasks` | Run independent tasks as parallel sub-agents |
+| `/checkpoint` | Save session state for resumption in a new session |
+| `/handoff` | Package context for another agent or human collaborator |
+
+### Project Health
+| Command | Description |
+|---------|-------------|
+| `/progress-report` | Status report from tasks.json with completion % |
+| `/changelog` | Draft changelog from completed tasks and spec versions |
+| `/dead-code` | Find code not covered by any spec |
+| `/post-mortem` | Trace a bug to its spec gap and patch both |
+
+### CI / Git
+| Command | Description |
+|---------|-------------|
+| `/pre-commit` | Spec validation gate before git commit |
+| `/generate-pr` | Draft PR title and body from completed tasks |
+
+### Kit Management
+| Command | Description |
+|---------|-------------|
+| `/rin-init` | Bootstrap Rin Kit into an existing project |
+| `/rin-upgrade` | Pull latest command definitions from the Rin Kit repo |
 
 ## Project Structure
 
 ```
 .claude/
-  commands/        # Slash command definitions
-  skills/          # Reusable skill definitions
-specs/             # Formal specifications (OpenAPI, Markdown)
-plans/             # Generated plans from specs
-tasks/             # tasks.json — atomic task queue
-agents/            # Agent configuration files
-docs/              # Documentation
+  CLAUDE.md            # Workflow rules and agent roles
+  commands/            # 34 slash command definitions
+specs/                 # Formal specifications
+  archive/             # Retired specs
+plans/                 # Generated plans
+tasks/
+  tasks.json           # Atomic task queue
+docs/
+  post-mortems/        # Post-mortem documents
 ```
 
 ## License
